@@ -1,0 +1,13 @@
+﻿@page "{pedidoId:int}"
+@model PedidoApp.Pages.UpdateStatusModel
+
+<h2>Atualizar Status do Pedido</h2>
+
+<form method="post">
+    <div>
+        <label for="status">Novo Status:</label>
+        <input type="text" id="status" name="Pedido.Status.Descricao" value="@Model.Pedido.Status.Descricao" required />
+    </div>
+
+    <button type="submit">Atualizar</button>
+</form>

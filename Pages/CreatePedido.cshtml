@@ -1,0 +1,12 @@
+﻿@page
+@model PedidoApp.Pages.CreatePedidoModel
+
+<form method="post">
+    <label>Descrição</label>
+    <input type="text" asp-for="Pedido.Descricao" />
+    <label>Endereço de Entrega</label>
+    <input type="text" asp-for="Pedido.EnderecoEntrega" />
+    <label>Prazo</label>
+    <input type="date" asp-for="Pedido.Prazo" />
+    <button type="submit">Criar Pedido</button>
+</form>
