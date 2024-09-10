@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PedidoApp.Models; // Certifique-se de que esta linha está presente
+using PedidoApp.Models;
 
 namespace PedidoApp.Data
 {

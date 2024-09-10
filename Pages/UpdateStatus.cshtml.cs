@@ -40,11 +40,10 @@ namespace PedidoApp.Pages
                 return NotFound();
             }
 
-            // Atualizar o status do pedido com a nova descrição
             pedido.Status = new Status
             {
-                Tipo = "Atualizado",  // Define um valor para o tipo de status
-                Descricao = Pedido.Status.Descricao,  // O valor preenchido no formulário
+                Tipo = "Atualizado",
+                Descricao = Pedido.Status.Descricao,
                 DataHora = System.DateTime.Now
             };
 
