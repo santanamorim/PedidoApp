@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PedidoApp.Data;
 
@@ -10,9 +11,11 @@ using PedidoApp.Data;
 namespace PedidoApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240924021010_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -100,13 +103,13 @@ namespace PedidoApp.Migrations
                         new
                         {
                             Id = 1,
-                            DataGeracao = new DateTime(2024, 9, 23, 22, 27, 7, 291, DateTimeKind.Local).AddTicks(6140),
+                            DataGeracao = new DateTime(2024, 9, 23, 22, 10, 9, 999, DateTimeKind.Local).AddTicks(1970),
                             TipoRelatorio = "Relatório de Vendas"
                         },
                         new
                         {
                             Id = 2,
-                            DataGeracao = new DateTime(2024, 9, 23, 22, 27, 7, 291, DateTimeKind.Local).AddTicks(6150),
+                            DataGeracao = new DateTime(2024, 9, 23, 22, 10, 9, 999, DateTimeKind.Local).AddTicks(1980),
                             TipoRelatorio = "Relatório de Estoque"
                         });
                 });
@@ -136,14 +139,14 @@ namespace PedidoApp.Migrations
                         new
                         {
                             Id = 1,
-                            DataHora = new DateTime(2024, 9, 23, 22, 27, 7, 291, DateTimeKind.Local).AddTicks(6000),
+                            DataHora = new DateTime(2024, 9, 23, 22, 10, 9, 999, DateTimeKind.Local).AddTicks(1860),
                             Descricao = "Pedido em andamento",
                             Tipo = "Pendente"
                         },
                         new
                         {
                             Id = 2,
-                            DataHora = new DateTime(2024, 9, 23, 22, 27, 7, 291, DateTimeKind.Local).AddTicks(6040),
+                            DataHora = new DateTime(2024, 9, 23, 22, 10, 9, 999, DateTimeKind.Local).AddTicks(1880),
                             Descricao = "Pedido finalizado",
                             Tipo = "Concluído"
                         });

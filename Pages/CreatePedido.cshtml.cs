@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PedidoApp.Data;
 using PedidoApp.Models;
+using System.Threading.Tasks;
 
 namespace PedidoApp.Pages
 {
@@ -10,7 +11,7 @@ namespace PedidoApp.Pages
         private readonly AppDbContext _context;
 
         [BindProperty]
-        public Pedido Pedido { get; set; }
+        public Pedido Pedido { get; set; } = new Pedido();
 
         public CreatePedidoModel(AppDbContext context)
         {
@@ -19,11 +20,15 @@ namespace PedidoApp.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Pedido.DataCadastro = DateTime.Now;
-            Pedido.Status = new Status { Tipo = "Pendente", DataHora = DateTime.Now };
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             _context.Pedidos.Add(Pedido);
             await _context.SaveChangesAsync();
-            return RedirectToPage("Index");
+
+            return RedirectToPage("/Index");
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using PedidoApp.Data;
 using PedidoApp.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PedidoApp.Pages
@@ -10,18 +12,17 @@ namespace PedidoApp.Pages
     {
         private readonly AppDbContext _context;
 
+        [BindProperty]
+        public Pedido Pedido { get; set; } = new Pedido();
+
         public UpdateStatusModel(AppDbContext context)
         {
             _context = context;
         }
 
-        [BindProperty]
-        public Pedido Pedido { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int pedidoId)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            // Busca o pedido pelo ID
-            Pedido = await _context.Pedidos.FindAsync(pedidoId);
+            Pedido = _context.Pedidos.FirstOrDefault(p => p.Id == id);
 
             if (Pedido == null)
             {
@@ -31,24 +32,32 @@ namespace PedidoApp.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int pedidoId)
+        public async Task<IActionResult> OnPostAsync()
         {
-            var pedido = await _context.Pedidos.FindAsync(pedidoId);
-
-            if (pedido == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return Page();
             }
 
-            pedido.Status = new Status
-            {
-                Tipo = "Atualizado",
-                Descricao = Pedido.Status.Descricao,
-                DataHora = System.DateTime.Now
-            };
+            _context.Attach(Pedido).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
-            await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Pedidos.Any(p => p.Id == Pedido.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToPage("/Index");
         }
     }
 }
